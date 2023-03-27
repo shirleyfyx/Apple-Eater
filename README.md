@@ -1,6 +1,6 @@
 # Apple-Eater :apple:
 
-<em> ### This is a simple snake game called "Apple Eater". The objective of the game is to control the snake and make it eat as many apples as possible without colliding with the walls or its own body. ### </em>
+<em> <h3> This is a simple snake game called "Apple Eater". The objective of the game is to control the snake and make it eat as many apples as possible without colliding with the walls or its own body. </h3> </em>
 
 ## Prerequisites ##
 
