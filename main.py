@@ -3,7 +3,7 @@ import random
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 700
-SPEED = 60
+SPEED = 150
 SPACE_SIZE = 50
 BODY_PARTS = 3
 SNAKE_COLOR = "#00FF00"
@@ -55,11 +55,22 @@ def next_turn(snake, food):
 
     snake.squares.insert(0, square)
 
-    del snake.coordinates[-1]
+    if x == food.coordinates[0] and y == food.coordinates[1]:
+        # snake has touched the apple. 
+        global score
+        score += 1
+        label.config(text="Score: Eating {} Apple!".format(score))
 
-    Canvas.delete(snake.squares[-1])
+        Canvas.delete("food")
 
-    del snake.squares[-1]
+        food = Food()
+
+    else:
+        del snake.coordinates[-1]
+
+        Canvas.delete(snake.squares[-1])
+
+        del snake.squares[-1]
 
     #delete the last element of the snake from the list and canvas. 
 
@@ -69,6 +80,22 @@ def change_direction(new_direction):
     
     global direction 
     # old direction
+
+    if new_direction == "left":
+        if direction != 'right':
+            direction = new_direction
+    
+    elif new_direction == "right":
+        if direction != 'left':
+            direction = new_direction
+    
+    elif new_direction == "up":
+        if direction != 'down':
+            direction = new_direction
+    
+    elif new_direction == "down":
+        if direction != 'up':
+            direction = new_direction
 
 
 def check_collisions():
