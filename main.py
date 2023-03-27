@@ -4,7 +4,7 @@ import random
 GAME_WIDTH = 700
 GAME_HEIGHT = 700
 SPEED = 100
-SPACE_SIZE = 25
+SPACE_SIZE = 35
 BODY_PARTS = 5
 SNAKE_COLOR = "#00FF00"
 FOOD_COLOR = "#FF0000"
@@ -126,9 +126,9 @@ def check_collisions(snake):
 
 def game_over():
     Canvas.delete(ALL)
-    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('consolas',70), text="NO APPLES!", anchor = CENTER, fill="red", tag="gameover")
+    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('Verdana',70), text="NO APPLES!", anchor = CENTER, fill="red", tag="gameover")
     
-    restart_button = Button(window, text="Restart Game", font=('consolas', 20), command=restart_game)
+    restart_button = Button(window, text="Restart Game", font=('Georgia', 20), command=restart_game)
     Canvas.create_window(Canvas.winfo_width()/2, Canvas.winfo_height()/2+100, anchor = CENTER, window=restart_button,tag="startover")
 
 
