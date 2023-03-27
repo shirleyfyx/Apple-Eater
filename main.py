@@ -3,7 +3,7 @@ import random
 
 GAME_WIDTH = 700
 GAME_HEIGHT = 700
-SPEED = 150
+SPEED = 100
 SPACE_SIZE = 50
 BODY_PARTS = 5
 SNAKE_COLOR = "#00FF00"
@@ -124,7 +124,8 @@ def check_collisions(snake):
     return False
 
 def game_over():
-    pass
+    Canvas.delete(ALL)
+    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('consolas',70), text="NO APPLES!", fill="red", tag="gameover")
 
 window = Tk()
 window.title("APPLE EATER")
