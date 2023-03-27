@@ -4,7 +4,7 @@ import random
 GAME_WIDTH = 700
 GAME_HEIGHT = 700
 SPEED = 100
-SPACE_SIZE = 50
+SPACE_SIZE = 25
 BODY_PARTS = 5
 SNAKE_COLOR = "#00FF00"
 FOOD_COLOR = "#FF0000"
@@ -76,6 +76,7 @@ def next_turn(snake, food):
 
     if check_collisions(snake):
         game_over()
+        
 
     else:
     
@@ -125,7 +126,27 @@ def check_collisions(snake):
 
 def game_over():
     Canvas.delete(ALL)
-    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('consolas',70), text="NO APPLES!", fill="red", tag="gameover")
+    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('consolas',70), text="NO APPLES!", anchor = CENTER, fill="red", tag="gameover")
+    
+    restart_button = Button(window, text="Restart Game", font=('consolas', 20), command=restart_game)
+    Canvas.create_window(Canvas.winfo_width()/2, Canvas.winfo_height()/2+100, anchor = CENTER, window=restart_button,tag="startover")
+
+
+def restart_game():
+    global score, direction, snake, food
+    
+    # Reset game variables
+    score = 0
+    direction = 'down'
+    snake = Snake()
+    food = Food()
+    label.config(text="Score:{}".format(score))
+
+    if Canvas.find_withtag("gameover"):
+        Canvas.delete("gameover")
+        Canvas.delete("startover")
+    
+    next_turn(snake,food)
 
 window = Tk()
 window.title("APPLE EATER")
