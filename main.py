@@ -10,6 +10,7 @@ SNAKE_COLOR = "#00FF00"
 FOOD_COLOR = "#FF0000"
 BACKGROUND_COLOR = "#000000"
 
+
 class Snake:
     
     def __init__(self):
@@ -36,6 +37,7 @@ class Food:
         Canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill = FOOD_COLOR, tag = "food")
 
 def next_turn(snake, food):
+
     
     x , y = snake.coordinates[0]
 
@@ -55,12 +57,18 @@ def next_turn(snake, food):
 
     snake.squares.insert(0, square)
 
+
     if x == food.coordinates[0] and y == food.coordinates[1]:
         # snake has touched the apple. 
-        global score
+        global score, highest_score
+        
         score += 1
-        label.config(text="Score: Eating {} Apple!".format(score))
 
+        if score >= highest_score:
+            highest_score = score
+
+        label.config(text="Score: {}". format(score))
+    
         Canvas.delete("food")
 
         food = Food()
@@ -126,25 +134,30 @@ def check_collisions(snake):
 
 def game_over():
     Canvas.delete(ALL)
-    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2, font=('Verdana',70), text="NO APPLES!", anchor = CENTER, fill="red", tag="gameover")
-    
+
+    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2-120, font=('Helvetica',30), text="Highest Score {}".format(highest_score), anchor = CENTER, fill="white", tag= "highestscore")
+
+    Canvas.create_text(Canvas.winfo_width()/2, Canvas.winfo_height()/2-20, font=('Verdana',70), text="GAME OVER!", anchor = CENTER, fill="red", tag="gameover")
+
     restart_button = Button(window, text="Restart Game", font=('Georgia', 20), command=restart_game)
     Canvas.create_window(Canvas.winfo_width()/2, Canvas.winfo_height()/2+100, anchor = CENTER, window=restart_button,tag="startover")
 
 
+
 def restart_game():
     global score, direction, snake, food
-    
+
     # Reset game variables
     score = 0
+    label.config(text="Score: {}". format(score))
     direction = 'down'
     snake = Snake()
     food = Food()
-    label.config(text="Score:{}".format(score))
 
     if Canvas.find_withtag("gameover"):
         Canvas.delete("gameover")
         Canvas.delete("startover")
+        Canvas.delete("highestscore")
     
     next_turn(snake,food)
 
@@ -153,9 +166,11 @@ window.title("APPLE EATER")
 window.resizable(False, False)
 
 score = 0
+highest_score = 0
 direction = 'down'
 
 label = Label(window, text="Score:{}".format(score), font=('consolas', 40))
+
 label.pack()
 
 Canvas = Canvas(window, bg=BACKGROUND_COLOR, height = GAME_HEIGHT, width = GAME_WIDTH)
